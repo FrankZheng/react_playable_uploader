@@ -7,30 +7,26 @@
   margin-top: 20px;
   padding: 20px;
   display: flex;
-  flex-direction: "column";
-  align-items: "center";
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
-  width: 100%;
+  width: 70%;
   display: flex;
-  flex-direction: "column";
-  align-items: "center";
+  flex-direction: column;
+  align-items: center;
   padding: 30px;
-}
-
-.instruction {
-  font-size: 20;
+  /* text-align: center; */
 }
 
 .playableURLInput {
   font-size: 18;
-  width: 100%;
+  width: 300px;
 }
 
 .dropZone {
-  padding: 5px;
-  height: 200px;
+  /* padding: 10px; */
   border: 2px dashed #ccc;
   text-align: center;
   display: flex;
@@ -38,6 +34,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  width: 300px;
+  min-height: 200px;
+}
+
+.dragOver {
+  border-color: #000;
 }
 
 .browse {
@@ -46,4 +48,14 @@
 
 .playableName {
   color: #c00;
+  max-width: 300px;
+  padding: 10px;
+}
+
+.uploadBtnContainer {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  /* background-color: #3d8fc7; */
+  align-items: center;
 }

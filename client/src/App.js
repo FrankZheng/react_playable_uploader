@@ -21,26 +21,64 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.fileInput = React.createRef();
+    this.dropZoneStyle = "dropZone";
+    this.dropZoneDragOverStyle = "dropZone dragOver";
+    this.playableURL = null;
     this.state = {
-      dropZoneStyle: "dropZone",
+      dropZoneStyle: this.dropZoneStyle,
       playableFile: null
     };
   }
 
   playableURLChange = e => {};
 
-  onDrop = e => {};
+  onDrop = e => {
+    e.preventDefault();
+    console.log(e.dataTransfer.files);
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      this.setState({
+        playableFile: files[0]
+      });
+    }
+    //TODO: check if it's a zip file
+    this.setState({
+      dropZoneStyle: this.dropZoneStyle
+    });
+  };
 
-  onDragOver = e => {};
+  onDragOver = e => {
+    e.preventDefault();
+    if (this.state.dropZoneStyle != this.dropZoneDragOverStyle) {
+      this.setState({
+        dropZoneStyle: this.dropZoneDragOverStyle
+      });
+    }
+  };
 
-  onDragLeave = e => {};
+  onDragLeave = () => {
+    this.setState({
+      dropZoneStyle: this.dropZoneStyle
+    });
+  };
 
-  handleClick = e => {};
+  handleBrowseClick = e => {
+    this.fileInput.current.click();
+  };
 
-  onFileChange = e => {};
+  onFileInputChange = e => {
+    console.log(e.target.files);
+    const files = e.target.files;
+    if (files.length > 0) {
+      this.setState({
+        playableFile: files[0]
+      });
+    }
+  };
 
   render() {
     const { dropZoneStyle, playableFile } = this.state;
+    console.log(dropZoneStyle);
     return (
       <div className="App">
         <AppBar position="static">
@@ -52,14 +90,10 @@ class App extends Component {
           </Toolbar>
         </AppBar>
 
-        <Container maxWidth="sm" className="container">
+        <Container className="container">
           <Card className="card">
             <CardContent>
-              <Typography
-                className="instruction"
-                color="textSecondary"
-                gutterBottom
-              >
+              <Typography variant="h6" color="textSecondary" gutterBottom>
                 Enter the URL for the playable
               </Typography>
               <TextField
@@ -69,11 +103,7 @@ class App extends Component {
                 onChange={this.playableURLChange}
               />
               <VSpacer height={10} />
-              <Typography
-                className="instruction"
-                color="textSecondary"
-                gutterBottom
-              >
+              <Typography variant="h6" color="textSecondary" gutterBottom>
                 Or upload a zip file
               </Typography>
               <div
@@ -81,7 +111,7 @@ class App extends Component {
                 onDrop={this.onDrop}
                 onDragOver={this.onDragOver}
                 onDragLeave={this.onDragLeave}
-                onClick={this.handleClick}
+                onClick={this.handleBrowseClick}
               >
                 <CloudUploadIcon fontSize="large" />
                 <Typography color="textSecondary" variant="body1">
@@ -93,6 +123,7 @@ class App extends Component {
                 <Typography variant="body2" className="browse">
                   Browse
                 </Typography>
+                <VSpacer height={10} />
                 {playableFile != null && (
                   <Typography variant="body1" className="playableName">
                     {playableFile.name}
@@ -103,21 +134,13 @@ class App extends Component {
                   name="bundle"
                   accept="application/zip"
                   style={{ display: "none" }}
-                  onChange={this.onFileChange}
+                  onChange={this.onFileInputChange}
                   ref={this.fileInput}
                 />
               </div>
               <VSpacer height={30} />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              <div className="uploadBtnContainer">
                 <Button
-                  style={{ width: 100 }}
                   variant="contained"
                   color="primary"
                   disabled={playableFile == null}
