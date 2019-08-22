@@ -10,12 +10,8 @@ import {
   CardContent,
   TextField
 } from "@material-ui/core";
-
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-
-const VSpacer = props => <div style={{ height: props.height }} />;
-
-const HSpacer = props => <div style={{ height: props.width }} />;
+import { VSpacer } from "./components/Spacer";
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +26,9 @@ class App extends Component {
     };
   }
 
-  playableURLChange = e => {};
+  playableURLChange = e => {
+    this.playableURL = e.target.value;
+  };
 
   onDrop = e => {
     e.preventDefault();
@@ -49,7 +47,7 @@ class App extends Component {
 
   onDragOver = e => {
     e.preventDefault();
-    if (this.state.dropZoneStyle != this.dropZoneDragOverStyle) {
+    if (this.state.dropZoneStyle !== this.dropZoneDragOverStyle) {
       this.setState({
         dropZoneStyle: this.dropZoneDragOverStyle
       });
